@@ -21,6 +21,9 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gm.gameOver) {
+            return;
+        }
         if (!inPlay){
             transform.position = paddle.position;
         }    
@@ -47,7 +50,7 @@ public class BallScript : MonoBehaviour
             Destroy(newExplosion.gameObject, 2.5f);
 
             gm.UpdateScore(other.gameObject.GetComponent<BrickScript>().points );
-
+            gm.UpdateNumberOfBricks();
             Destroy(other.gameObject);
         }
     } 
