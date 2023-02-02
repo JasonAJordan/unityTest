@@ -9,6 +9,8 @@ public class BallScript : MonoBehaviour
     public Transform paddle;
     public float speed;
     public Transform explosion;
+
+    public Transform powerup;
     public GameManager gm;
 
     // Start is called before the first frame update
@@ -46,6 +48,12 @@ public class BallScript : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other){
         if (other.transform.CompareTag("brick")){
+
+            int randChance = Random.Range(1,101);
+            if(randChance < 50){
+                Instantiate(powerup, other.transform.position, other.transform.rotation);
+            }
+
             Transform newExplosion = Instantiate(explosion, other.transform.position, other.transform.rotation);
             Destroy(newExplosion.gameObject, 2.5f);
 
