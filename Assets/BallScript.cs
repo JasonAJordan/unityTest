@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallScript : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public bool inPlay;
+    // public bool inPlay;
     public Transform paddle;
     public float speed;
     public Transform explosion;
@@ -24,26 +24,28 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while (gm.gameOver) {
-            // rb.velocity = Vector2.zero;
+
+        if (gm.gameOver) {
+            rb.velocity = Vector2.zero;
             return;
         } 
-        if (!inPlay){
+        if (!gm.inPlay){
             transform.position = paddle.position;
         }    
 
-        if (Input.GetButtonDown("Jump") && !inPlay) {
-            inPlay = true;
+        if (Input.GetButtonDown("Jump") && !gm.inPlay) {
+            gm.inPlay = true;
             rb.AddForce (Vector2.up * speed);
 
         }
+
     }
 
     void OnTriggerEnter2D(Collider2D other){
         if (other.CompareTag("bottom")) {
             Debug.Log("Ball hit the bottom of the screen");
             rb.velocity = Vector2.zero;
-            inPlay = false; 
+            gm.inPlay = false; 
             gm.UpdateLives(-1);
         }
     }
@@ -71,4 +73,7 @@ public class BallScript : MonoBehaviour
             audio.Play();
         }
     } 
+    public void RestBall(){
+        gm.inPlay = false;
+    }
 }

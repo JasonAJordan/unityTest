@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject loadLevelPanel;
     public int numberOfBricks;
-
+    public bool inPlay;
     public Transform[] levels;
 
     public int currentLevelIndex = 0;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score; 
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
         // Instantiate (instantiateTest, Vector2.zero, Quaternion.identity);
-        // PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
     }
 
     // Update is called once per frame
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
         Instantiate (levels[currentLevelIndex], Vector2.zero, Quaternion.identity);
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
         gameOver = false;
+        inPlay = false;
         loadLevelPanel.SetActive(false);
     }
 
@@ -110,7 +111,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void Quit(){
-        Application.Quit();
-        Debug.Log("Game Quit");
+        SceneManager.LoadScene("StartMenu");
+        // Application.Quit();
+        // Debug.Log("Game Quit");
     }
 }
