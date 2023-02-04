@@ -24,9 +24,10 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gm.gameOver) {
+        while (gm.gameOver) {
+            // rb.velocity = Vector2.zero;
             return;
-        }
+        } 
         if (!inPlay){
             transform.position = paddle.position;
         }    

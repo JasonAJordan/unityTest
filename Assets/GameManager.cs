@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public int score;
     public Text livesText;
     public Text scoreText;
+    public Text highScoreText; 
+    public InputField highScoreInput;
     public bool gameOver; 
     public GameObject gameOverPanel;
 
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score; 
         numberOfBricks = GameObject.FindGameObjectsWithTag("brick").Length;
         // Instantiate (instantiateTest, Vector2.zero, Quaternion.identity);
+        // PlayerPrefs.DeleteAll();
     }
 
     // Update is called once per frame
@@ -82,6 +85,23 @@ public class GameManager : MonoBehaviour
     void GameOver(){
         gameOver = true;
         gameOverPanel.SetActive (true);
+        int highScore = PlayerPrefs.GetInt("HIGHSCORE"); 
+        if (score > highScore){
+            PlayerPrefs.SetInt("HIGHSCORE", score);
+            highScoreText.text = "New High Score!" + "\n" + "Enter Your Name Below.";
+            highScoreInput.gameObject.SetActive(true);
+
+
+        } else {
+            highScoreText.text = PlayerPrefs.GetString("HIGHSCORENAME") + "'s high Score was " + highScore + "!\nCan you beat it?"; 
+        }
+    }
+
+    public void NewHighScore(){
+        string highScoreName = highScoreInput.text;
+        PlayerPrefs.SetString ("HIGHSCORENAME", highScoreName);
+        highScoreInput.gameObject.SetActive(false);
+        highScoreText.text = "Congratulations " + highScoreName + "\n" + "Your New High Score is " + score;
     }
 
     public void PlayAgain(){
